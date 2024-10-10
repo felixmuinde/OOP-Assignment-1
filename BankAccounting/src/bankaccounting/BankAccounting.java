@@ -9,13 +9,21 @@ package bankaccounting;
  * @author Edgar Thorne
  */
 public class BankAccounting {
-    
-    public BankAccounting(){
-        
-    }
-    private String userID;
+    private final String userID;
     private int accountBalance;
     public String accountName;
+    
+    //Constructors
+    public BankAccounting(String user, String name){
+        this.userID = user;
+        this.accountName = name;
+    }
+    public BankAccounting(String user, int startingAmount, String accountname){
+        this.userID = user;
+        this.accountBalance = 1000;
+        this.accountName = accountname;
+    }
+    
     
     public int CheckBalance(){
         return(accountBalance);
@@ -25,6 +33,9 @@ public class BankAccounting {
         String accountLine1 = "Account Name: " + accountName + "\n";
         String accountLine2 = "Account Balance: " + accountBalance + "\n";
         String message = accountLine0 + accountLine1 + accountLine2;
+        
+        /*System.out.println(DisplayAccountDetails) 
+        will display the concatenated message returned below*/
         return (message);
     }
     private void UpdateBalance(int newBalance){
