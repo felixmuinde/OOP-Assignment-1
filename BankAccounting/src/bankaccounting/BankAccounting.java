@@ -1,12 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package bankaccounting;
 
 /**
  *
- * @author Edgar Thorne
+ * @author Felix Muinde
  */
 public class BankAccounting {
     private final String userID;
@@ -16,11 +12,21 @@ public class BankAccounting {
     //Constructors
     public BankAccounting(String user, String name){
         this.userID = user;
+        this.accountBalance = 0;
         this.accountName = name;
     }
     public BankAccounting(String user, int startingAmount, String accountname){
         this.userID = user;
-        this.accountBalance = 1000;
+        
+        /*Validating the balance made during object construction
+            by checking if the value is awhole number
+        */
+        if(startingAmount % 1 != 0){
+            System.out.println("Can't make an account with a balance like that, only whole numbers.");
+        } else if (startingAmount > 0){
+            this.accountBalance = 1000 + (startingAmount * 1000);
+        }
+        
         this.accountName = accountname;
     }
     
@@ -38,24 +44,62 @@ public class BankAccounting {
         will display the concatenated message returned below*/
         return (message);
     }
-    private void UpdateBalance(int newBalance){
-        accountBalance = newBalance;
-    }
     
     public int Deposit(int depositAmount){
-        accountBalance = (accountBalance + (depositAmount * 1000));
-        UpdateBalance(accountBalance);
+        //Check if value is an integer
+        if(depositAmount % 1 != 0){
+            System.out.println("Value must be a whole number.");
+        } else if (depositAmount > 0){
+            accountBalance = (accountBalance + (depositAmount * 1000));
+        }
         return accountBalance;
     }
     
     public int Withdraw(int withdrawAmount){
-        accountBalance = (accountBalance + (withdrawAmount * 1000));
-        UpdateBalance(accountBalance);
+        if (withdrawAmount % 1 != 0){
+            System.out.println("Amount must be a whole number!");
+        //Prevent user from withdrawing negative balance, essentially creating an infinite money glitch
+        } else if (withdrawAmount > 0){
+            accountBalance = (accountBalance - (withdrawAmount * 1000));
+        }
         return accountBalance;
     }
     
     public static void main(String[] args) {
-        // TODO code application logic here
+    // Create an account with a default balance (0) using the first constructor
+        BankAccounting account1 = new BankAccounting("001", "John Doe");
+        System.out.println("Initial details for account1:");
+        System.out.println(account1.DisplayAccountDetails());
+
+    // Deposit some amount into account1
+        account1.Deposit(50);
+        System.out.println("After depositing 500 into account1:");
+        System.out.println(account1.DisplayAccountDetails());
+
+    // Withdraw some amount from account1
+        account1.Withdraw(20);
+        System.out.println("After withdrawing 200 from account1:");
+        System.out.println(account1.DisplayAccountDetails());
+
+    // Create an account with a starting balance using the second constructor
+        BankAccounting account2 = new BankAccounting("002", 1000, "Jane Doe");
+        System.out.println("Initial details for account2:");
+        System.out.println(account2.DisplayAccountDetails());
+
+    // Depositing into account2
+        account2.Deposit(3);
+        System.out.println("After depositing 300 into account2:");
+        System.out.println(account2.DisplayAccountDetails());
+
+    // Withdrawing from account2
+        account2.Withdraw(15);
+        System.out.println("After withdrawing 150 from account2:");
+        System.out.println(account2.DisplayAccountDetails());
+
+    // Trying to deposit or withdraw invalid amounts (negative or non-whole numbers)
+        System.out.println("Testing invalid deposit and withdrawal for account1:");
+        account1.Deposit(-50);  // Invalid deposit (negative amount)
+        account1.Withdraw(0);   // Invalid withdrawal (zero amount)
     }
     
 }
