@@ -60,3 +60,6 @@ public class BankAccounting {
 }
 
 ```
+![Assignment_Scan-FelixMuinde](https://github.com/user-attachments/assets/663c8368-9f0e-48e3-bc08-d4c436e24349)
+
+
